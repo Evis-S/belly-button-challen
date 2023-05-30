@@ -14,7 +14,7 @@ d3.json(url).then(function(data) {
   // Initialize the function
 function init() {
     // function update
-    let dropdownMenu = d3.select ("# selDataset");
+    let dropdownMenu = d3.select ("#selDataset");
 
     // Use D3
     d3.json(url).then((data)=> {
@@ -23,6 +23,7 @@ function init() {
 
       // Add samples to dropdown menu
         names. forEach((id) => {
+
          //Log the value of id for each iteration of the loop
          console.log (id);
          dropdownMenu.append("option").text(id).property("value",id);
@@ -47,14 +48,14 @@ function buildMetadata(sample) {
 
        // Retrieve all metadata
        let metadata = data.metadata;
-       // Filter 
+       // Filter based on the value
        let value = metadata.filter (result => result.id == sample);
         // Log the array of metadata objects after the have been filtered
         console.log(value)
         //Get the first index from the array
         let valueData = value[0];
         //Clear out metadata 
-        d3.select("#sample-metadata").html;
+        d3.select("#sample-metadata").html("");
         // Use Object.entries to add each key/value pair to the panel
         Object.entries(valueData).forEach(([key,value]) => {
 
@@ -118,7 +119,7 @@ function buildBarChart(sample) {
     });
 };
 
-/*3.Create a bubble chart that displays each sample.
+/*Create a bubble chart that displays each sample.
 Use otu_ids for the x values.
 Use sample_values for the y values.
 Use sample_values for the marker size.
@@ -184,7 +185,7 @@ function optionChanged(value) {
     buildBarChart(value);
     buildBubbleChart(value);
     buildGaugeChart(value);
-};
 
+ };
 // Call the initialize function
 init();
