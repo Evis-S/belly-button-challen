@@ -1,5 +1,8 @@
 # Belly-Button-Challenge
 Module 14
+<img width="1038" alt="Screenshot 2023-05-30 at 4 08 04 PM" src="https://github.com/Evis-S/belly-button-challenge/assets/125109090/d2844a89-b0e3-4a52-9756-dab3f4693164">
+
+
 
 In this assignment, an interactive dashboard was built to explore the Belly Button Biodiversity dataset, which catalogs the microbes that colonize human navels in JSON format.
 
