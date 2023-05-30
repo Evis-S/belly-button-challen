@@ -16,15 +16,15 @@ function init() {
     // function update
     let dropdownMenu = d3.select ("#selDataset");
 
-    // Use D3
+    // Use D3 to load the JSON file
     d3.json(url).then((data)=> {
-      //Set a variable for names
+      //Set a variable for the names
         let names = data.names;
 
-      // Add samples to dropdown menu
+      // Log the names 
         names. forEach((id) => {
 
-         //Log the value of id for each iteration of the loop
+         // Log the id
          console.log (id);
          dropdownMenu.append("option").text(id).property("value",id);
         });
@@ -33,7 +33,7 @@ function init() {
       // log the value of sampleOne
       console.log(sampleOne);
 
-     //Build the initial plots
+     // Call the functions to display the data and the plots to the page
       buildMetadata(sampleOne);
       buildBarchart(sampleOne);
       buildBubbleChart (sampleOne);
@@ -41,27 +41,27 @@ function init() {
 
     });
 };
-// Function that populates metadata info
+// Function that builds the metadata panel
 function buildMetadata(sample) {
  // Use D3 to retrieve all of the data
   d3.json(url).then((data) => {
 
        // Retrieve all metadata
        let metadata = data.metadata;
-       // Filter based on the value
+       // Log the metadata
        let value = metadata.filter (result => result.id == sample);
-        // Log the array of metadata objects after the have been filtered
+        // Log the value
         console.log(value)
-        //Get the first index from the array
+        // Get the first index from the array
         let valueData = value[0];
-        //Clear out metadata 
+        // Clear out metadata panel each time a new sample is selected
         d3.select("#sample-metadata").html("");
-        // Use Object.entries to add each key/value pair to the panel
+        // Use Object.entries to add each key and value pair to the panel
         Object.entries(valueData).forEach(([key,value]) => {
 
             // Log the individual key/value pairs as they are being appended to the metadata panel
             console.log(key,value);
-
+            // Append the key and value to the metadata panel
             d3.select("#sample-metadata").append("h5").text(`${key}: ${value}`);
         });
     });
@@ -189,3 +189,51 @@ function optionChanged(value) {
  };
 // Call the initialize function
 init();
+
+//Advanced Challenge Assignment
+//Gauge Chart
+//Create a gauge chart to plot the weekly washing frequency of the individual.
+let GaugeData = [
+  {
+    domain: { x: [0, 1], y: [0, 1] },
+    value: "wfreq",
+    title: { text: "Belly Button Washing Frequency <br> Scrubs per Week" },
+    type: "indicator",
+    mode: "gauge+number",
+      // Set the gauge range from 0 to 9
+    gauge: {
+      text: ["8-9", "7-8", "6-7", "5-6", "4-5", "3-4", "2-3", "1-2", "0-1", ""],
+        textinfo: "text",
+        textposition: "inside",
+      axis: { range: [null,9],tickwith:1 },
+      steps: [
+        { range: [0, 1],color: "rgba(243, 233, 217, 0),"},
+        { range: [1, 2],color: "rgba(232, 226, 202, .5)"},
+        { range: [2, 3],color: "rgba(210, 206, 145, .5)"},
+        { range: [3, 4],color:  "rgba(202, 209, 95, .5)"},
+        { range: [4, 5],color:  "rgba(184, 205, 68, .5)"},
+        { range: [5, 6],color: "rgba(170, 202, 42, .5)"},
+        { range: [6, 7],color: "rgba(142, 178, 35 , .5)"},
+        { range: [7, 8],color:  "rgba(110, 154, 22, .5)"},
+        { range: [8, 9],color: "rgba(50, 143, 10, 0.5)"},
+      ],
+          threshold: {
+        line: { color: "red", width: 4 },
+        thickness: 1 ,
+        value: 490
+      }
+    }
+  }
+];
+// Set the layout for the gauge chart
+let gaugeLayout = { 
+  width: 600, 
+  height: 450, 
+  margin: { t: 0, b: 0 } 
+};
+// Call Plotly to plot the gauge chart
+Plotly.newPlot('gauge',GaugeData, gaugeLayout);
+
+// Call the initialize function
+init();
+
